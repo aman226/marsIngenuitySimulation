@@ -2,7 +2,7 @@
 ## Makefile generated for component 'MARS'. 
 ## 
 ## Makefile     : MARS.mk
-## Generated on : Thu Oct 20 23:51:43 2022
+## Generated on : Fri Oct 28 08:09:25 2022
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/MARS
 ## Product type : executable
 ## 
@@ -25,7 +25,7 @@ START_DIR                 = /home/aman/GitHub/flightTestingLab/controls/Ingenuit
 SOLVER                    = 
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
-TGT_FCN_LIB               = ISO_C++11
+TGT_FCN_LIB               = ISO_C
 MODEL_HAS_DYNAMICALLY_LOADED_SFCNS = 0
 RELATIVE_PATH_TO_ANCHOR   = ..
 C_STANDARD_OPTS           = -fwrapv
@@ -157,10 +157,10 @@ INCLUDES = $(INCLUDES_BUILDINFO)
 ## DEFINES
 ###########################################################################
 
-DEFINES_BUILD_ARGS = -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DMAT_FILE=0 -DONESTEPFCN=1 -DTERMFCN=1 -DMULTI_INSTANCE_CODE=1 -DINTEGER_CODE=0 -DMT=0
+DEFINES_BUILD_ARGS = -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DMAT_FILE=0 -DONESTEPFCN=1 -DTERMFCN=1 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=0
 DEFINES_CUSTOM = 
 DEFINES_OPTS = -DTID01EQ=1
-DEFINES_STANDARD = -DMODEL=MARS -DNUMST=2 -DNCSTATES=17 -DHAVESTDIO -DRT -DUSE_RTMODEL
+DEFINES_STANDARD = -DMODEL=MARS -DNUMST=3 -DNCSTATES=19 -DHAVESTDIO -DRT -DUSE_RTMODEL
 
 DEFINES = $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(DEFINES_STANDARD)
 
@@ -168,9 +168,9 @@ DEFINES = $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(DEFINES_STAN
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/MARS_grt_rtw/MARS.cpp $(START_DIR)/MARS_grt_rtw/MARS_data.cpp $(START_DIR)/MARS_grt_rtw/rtGetInf.cpp $(START_DIR)/MARS_grt_rtw/rtGetNaN.cpp $(START_DIR)/MARS_grt_rtw/rt_nonfinite.cpp
+SRCS = $(START_DIR)/MARS_grt_rtw/MARS.c $(START_DIR)/MARS_grt_rtw/MARS_data.c $(START_DIR)/MARS_grt_rtw/rtGetInf.c $(START_DIR)/MARS_grt_rtw/rtGetNaN.c $(START_DIR)/MARS_grt_rtw/rt_nonfinite.c
 
-MAIN_SRC = $(MATLAB_ROOT)/rtw/c/src/common/rt_cppclass_main.cpp
+MAIN_SRC = $(MATLAB_ROOT)/rtw/c/src/common/rt_main.c
 
 ALL_SRCS = $(SRCS) $(MAIN_SRC)
 
@@ -180,7 +180,7 @@ ALL_SRCS = $(SRCS) $(MAIN_SRC)
 
 OBJS = MARS.o MARS_data.o rtGetInf.o rtGetNaN.o rt_nonfinite.o
 
-MAIN_OBJ = rt_cppclass_main.o
+MAIN_OBJ = rt_main.o
 
 ALL_OBJS = $(OBJS) $(MAIN_OBJ)
 
@@ -268,7 +268,7 @@ execute : download
 
 $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS) $(MAIN_OBJ)
 	@echo "### Creating standalone executable "$(PRODUCT)" ..."
-	$(CPP_LD) $(CPP_LDFLAGS) -o $(PRODUCT) $(OBJS) $(MAIN_OBJ) $(SYSTEM_LIBS) $(TOOLCHAIN_LIBS)
+	$(LD) $(LDFLAGS) -o $(PRODUCT) $(OBJS) $(MAIN_OBJ) $(SYSTEM_LIBS) $(TOOLCHAIN_LIBS)
 	@echo "### Created: $(PRODUCT)"
 
 
@@ -328,28 +328,28 @@ $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS) $(MAIN_OBJ)
 	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-MARS.o : $(START_DIR)/MARS_grt_rtw/MARS.cpp
-	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+MARS.o : $(START_DIR)/MARS_grt_rtw/MARS.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-MARS_data.o : $(START_DIR)/MARS_grt_rtw/MARS_data.cpp
-	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+MARS_data.o : $(START_DIR)/MARS_grt_rtw/MARS_data.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rtGetInf.o : $(START_DIR)/MARS_grt_rtw/rtGetInf.cpp
-	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+rtGetInf.o : $(START_DIR)/MARS_grt_rtw/rtGetInf.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rtGetNaN.o : $(START_DIR)/MARS_grt_rtw/rtGetNaN.cpp
-	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+rtGetNaN.o : $(START_DIR)/MARS_grt_rtw/rtGetNaN.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rt_nonfinite.o : $(START_DIR)/MARS_grt_rtw/rt_nonfinite.cpp
-	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+rt_nonfinite.o : $(START_DIR)/MARS_grt_rtw/rt_nonfinite.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rt_cppclass_main.o : $(MATLAB_ROOT)/rtw/c/src/common/rt_cppclass_main.cpp
-	$(CPP) $(CPPFLAGS) -o "$@" "$<"
+rt_main.o : $(MATLAB_ROOT)/rtw/c/src/common/rt_main.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
 ###########################################################################

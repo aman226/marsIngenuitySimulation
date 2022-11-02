@@ -1,0 +1,115 @@
+component simple_rotor
+    % Simple Rotor : 1.5
+    % Represents a simplified helicopter rotor that converts rotary motion
+    % to vertical thrust. Thrust and rotor drag power are based on nondimensional 
+    % coefficients that are a function of the vehicle's advance speed ratio.
+    % Blade pitch angle is fixed.
+    %
+    % Ports R and C are the mechanical rotational conserving ports
+    % associated with the shaft and casing, respectively. 
+    % The port V corresponds to the vertical translational motion conserving port.
+
+    % Copyright 2021 The MathWorks, Inc.
+
+    % Port definitions
+    nodes
+        R = foundation.mechanical.rotational.rotational; % R
+        C = foundation.mechanical.rotational.rotational; % C    
+        V = foundation.mechanical.translational.translational; % V
+    end
+    
+    outputs
+    	T = { 0, 'N' };
+    end
+  
+  
+    % Port locations
+    annotations
+        [R, C]  : Side = left
+        V : Side = right
+    end
+    
+    % Block mask icon
+    annotations
+        Icon = 'simple_rotor.svg'
+    end
+    
+    % Parameters
+    parameters
+        rot_dir = simscape.enum.posneg.positive;   % Direction of rotation for positive thrust
+        D                 = {0.2,      'm'};       % Propeller diameter
+        J_TLU= {[0, 0.2, 0.4, 0.6, 0.8, 1], '1'};  % Advance ratio vector, J
+        k_thrust_TLU = {[0.12, 0.10, 0.08, 0.05, 0.00, -0.03], ...
+                                        '1'};      % Thrust coefficient table, kT(J)
+        k_power_TLU = {[0.05, 0.051, 0.052, 0.04, 0.015, -0.01], ...
+                                        '1'};      % Power coefficient table, kP(J)    
+        interp_method = simscape.enum.interpolation.linear; % Interpolation method
+        extrap_method = simscape.enum.extrapolation.linear; % Extrapolation method
+        density           = {1.05,    'kg/m^3'};   % Fluid density
+        n_thr             = {0.001,   'Hz'};       % Rotational speed threshold
+    end
+    
+    % User Interface: Organize parameters in groups
+    annotations 
+        UILayout = [UIGroup('Main', rot_dir, D, J_TLU, k_thrust_TLU, ...
+                        k_power_TLU, interp_method, extrap_method)
+                    UIGroup('Environment', density)
+                    UIGroup('Advanced', n_thr)] 
+    end
+    
+    % Variable definitions
+    variables
+        w      = { 0, 'rad/s'};        % Rotational velocity of the shaft
+        Q      = { 0, 'N*m' };         % Torque on the shaft
+    end
+    variables(Access=private, ExternalAccess=observe)
+        thrust = { 0, 'N' }; % Thrust force
+    end
+    variables(Access=private, ExternalAccess=none)
+        n      = { 0, 'Hz'}; % Rotational velocity of the shaft (in Hz)
+    end
+    
+    % Define positive sense of torque and thrust
+    branches
+        Q: R.t -> C.t;  % Through variable Q from node R to node C
+        thrust : * -> V.f;
+    end
+    
+    % Advance speed ratio - saturated to avoid divide-by-zero
+    intermediates (Access = private, ExternalAccess = none)
+        J_val= rot_dir*V.v*n/(D*(n^2+n_thr^2)); % Signed advance ratio
+    end
+    
+    if J_TLU(1) >= 0 
+        % Assume thrust and power coefficient curves are symmetrical for negative advance ratios
+        intermediates (Access = private, ExternalAccess=observe) % For logging
+            J = neabs(J_val); % Advance ratio
+        end
+    else %  J_TLU(1) < 0 ...
+        intermediates (Access = private, ExternalAccess=observe) % For logging
+            J = J_val; % Advance ratio
+        end
+    end
+    
+    intermediates (Access = private, ExternalAccess=observe) % For logging
+        kt= tablelookup(J_TLU, k_thrust_TLU, J, ...
+                interpolation = interp_method, extrapolation = extrap_method); % Thrust coefficient
+        kpow= tablelookup(J_TLU, k_power_TLU, J, ...
+                interpolation = interp_method, extrapolation = extrap_method); % Power coefficient
+        kq = kpow/(2*pi); % Torque coefficient
+    end
+    
+    equations
+        % Angular speed
+        w == R.w-C.w;
+        n == w/(2*pi);
+        
+        % Propeller torque equation
+        Q == kq*density*D^5*n*sqrt(n^2 + n_thr^2); % replace n^2 with n*sqrt(n^2 + n_thr^2) for numerical robustness
+        
+        % Propeller thrust equation
+        thrust == rot_dir*kt*density*D^4*n*sqrt(n^2 + n_thr^2); % replace n^2 with n*sqrt(n^2 + n_thr^2) for numerical robustness
+        T == thrust
+    end
+    
+end

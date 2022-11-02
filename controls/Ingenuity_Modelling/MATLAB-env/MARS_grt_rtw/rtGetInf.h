@@ -7,9 +7,9 @@
  *
  * Code generation for model "MARS".
  *
- * Model version              : 1.6
+ * Model version              : 1.28
  * Simulink Coder version : 9.7 (R2022a) 13-Nov-2021
- * C++ source code generated on : Thu Oct 20 23:51:39 2022
+ * C source code generated on : Fri Oct 28 08:09:17 2022
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -21,19 +21,10 @@
 #ifndef RTW_HEADER_rtGetInf_h_
 #define RTW_HEADER_rtGetInf_h_
 #include "rtwtypes.h"
-#ifdef __cplusplus
 
-extern "C" {
+extern real_T rtGetInf(void);
+extern real32_T rtGetInfF(void);
+extern real_T rtGetMinusInf(void);
+extern real32_T rtGetMinusInfF(void);
 
-#endif
-
-  extern real_T rtGetInf(void);
-  extern real32_T rtGetInfF(void);
-  extern real_T rtGetMinusInf(void);
-  extern real32_T rtGetMinusInfF(void);
-
-#ifdef __cplusplus
-
-}                                      /* extern "C" */
-#endif
 #endif                                 /* RTW_HEADER_rtGetInf_h_ */
