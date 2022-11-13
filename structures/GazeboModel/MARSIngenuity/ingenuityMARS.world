@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>1 0.1 0.1 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <scene>
+	<sky>
+  	 <material>Gazebo/RedGlow</material>
+	</sky>
+      <ambient>0 0 0 1</ambient>
+      <shadows>0</shadows>
+      <background>0.7 0.7 0.7 1</background>
+    </scene>
+    
+        
+     <model name='mars_topo'>
+      <static>1</static>
+      <link name='body'>
+        <visual name='visual'>
+          <pose>-30 -10 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+            <scale>1.5 1.5 0.5</scale>
+              <uri>mars_topografi.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision1'>
+        <pose>-30 -10 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+            
+            <scale>1.5 1.5 0.5</scale>
+              <uri>mars_topografi.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    
+
+    
+    
+    <model name="ingenuity">
+    
+      <pose>0 0 3.2 0 0 0</pose>
+      <static>false</static>
+      
+      
+      <link name="body">
+        <visual name="body_visual">
+          <geometry>
+            <mesh> <scale>0.2 0.2 0.2</scale> <uri>body.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="body_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>body.stl</uri></mesh>
+          </geometry>
+        </collision>
+        
+
+      </link>
+      
+
+      <link name="leg1">
+        <visual name="leg1_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg01.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="leg1_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg01.stl</uri></mesh>
+          </geometry>
+        </collision>
+        
+
+      </link>      
+      
+      <link name="leg2">
+        <visual name="leg2_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg02.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="leg2_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg02.stl</uri></mesh>
+          </geometry>
+        </collision>
+        
+
+      </link>      
+
+      <link name="leg3">
+        <visual name="leg3_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg03.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="leg3_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg03.stl</uri></mesh>
+          </geometry>
+        </collision>
+	
+      </link>
+      
+      <link name="leg4">
+        <visual name="leg4_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg04.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="leg4_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>leg04.stl</uri></mesh>
+          </geometry>
+        </collision>
+     
+     </link>
+       
+
+      <link name="rotor1">
+        <visual name="rotor1_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>rotor1.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="rotor1_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>rotor1.stl</uri></mesh>
+          </geometry>
+        </collision>
+        
+
+      </link>      
+ 
+
+      <link name="rotor2">
+        <visual name="rotor2_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>rotor2.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+	
+        <collision name="rotor2_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>rotor2.stl</uri></mesh>
+          </geometry>
+        </collision>
+	
+
+      </link>
+      
+      <link name="collective1">
+        <visual name="collective1_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>collective1.stl</uri></mesh>
+          </geometry>
+        </visual>
+        
+        
+        <collision name="collective1_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>collective1.stl</uri></mesh>
+          </geometry>
+        </collision>
+        
+                
+      </link>
+ 
+ 
+ 
+      <link name="collective2">
+        <visual name="collective2_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>collective2.stl</uri></mesh>
+          </geometry>
+        </visual>
+
+
+        <collision name="collective2_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>collective2.stl</uri></mesh>
+          </geometry>
+        </collision>  
+           
+      </link>
+      
+      
+      
+      
+      <link name="solarPanel">
+        <visual name="solarPanel_visual">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>solarPanel.stl</uri></mesh>
+          </geometry>
+        </visual>
+        
+
+        <collision name="solarPanel_collision">
+          <geometry>
+            <mesh><scale>0.2 0.2 0.2</scale><uri>solarPanel.stl</uri></mesh>
+          </geometry>
+        </collision>
+        
+      </link>
+      
+      
+      
+      <joint name="body_leg1" type="fixed">
+  	<parent>body</parent>
+ 	 <child>leg1</child>
+      </joint>
+      
+      <joint name="body_leg2" type="fixed">
+  	<parent>body</parent>
+ 	 <child>leg2</child>
+      </joint>
+      
+      <joint name="body_leg3" type="fixed">
+  	<parent>body</parent>
+ 	 <child>leg3</child>
+      </joint>
+      
+      <joint name="body_leg4" type="fixed">
+  	<parent>body</parent>
+ 	 <child>leg4</child>
+      </joint>
+      
+      
+      <joint name="body_collective2" type="fixed">
+  	<parent>body</parent>
+ 	 <child>collective2</child>
+      </joint>
+      
+      <joint name="body_collective1" type="fixed">
+  	<parent>body</parent>
+ 	 <child>collective1</child>
+      </joint>
+      
+      <joint name="body_solarPanel" type="fixed">
+  	<parent>body</parent>
+ 	 <child>solarPanel</child>
+      </joint>
+      
+      <joint name="body_rotor1" type="revolute">
+  	<parent>body</parent>
+ 	 <child>rotor1</child>
+ 	  <axis>
+            <xyz>0 0 1</xyz>
+          </axis>
+      </joint>
+      
+      <joint name="body_rotor2" type="revolute">
+  	<parent>body</parent>
+ 	 <child>rotor2</child>
+ 	 <axis>
+            <xyz>0 0 1</xyz>
+          </axis>
+      </joint>
+      
+     
+   </model> 
+   
+
+   
+    <plugin name="joint_control" filename="libJointControlPlugin.so">
+     	<controller type="velocity">
+      
+        <joint>body_rotor1</joint>
+        <joint>body_rotor2</joint>
+     	</controller>
+
+   </plugin>
+
+   <plugin name="GazeboPlugin" filename="lib/libGazeboCoSimPlugin.so"><portNumber>14581</portNumber></plugin>
+  </world>
+</sdf>
