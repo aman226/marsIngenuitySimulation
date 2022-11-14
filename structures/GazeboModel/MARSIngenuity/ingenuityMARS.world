@@ -22,11 +22,11 @@
     </light>
     <scene>
 	<sky>
-  	 <material>Gazebo/RedGlow</material>
+  	<material>SkyX_Moon</material>
 	</sky>
-      <ambient>0 0 0 1</ambient>
+      <ambient> 0.1953 0 0</ambient>
       <shadows>0</shadows>
-      <background>0.7 0.7 0.7 1</background>
+      <background>0.8 0 0 1</background>
     </scene>
     
         
@@ -312,15 +312,6 @@
    </model> 
    
 
-   
-    <plugin name="joint_control" filename="libJointControlPlugin.so">
-     	<controller type="velocity">
-      
-        <joint>body_rotor1</joint>
-        <joint>body_rotor2</joint>
-     	</controller>
-
-   </plugin>
 
    <plugin name="GazeboPlugin" filename="lib/libGazeboCoSimPlugin.so"><portNumber>14581</portNumber></plugin>
   </world>
